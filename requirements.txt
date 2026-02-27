@@ -1,0 +1,4 @@
+dotenv==0.9.9
+pillow==12.1.1
+python-dotenv==1.2.1
+qrcode==8.2
