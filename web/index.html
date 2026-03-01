@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Studio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-dot"></div>QR<span>Studio</span>
+            </div>
+            <p class="tagline">Generate · Style · Export</p>
+        </header>
+
+        <div class="layout">
+            <div>
+                <!-- Content -->
+                <div class="panel">
+                    <div class="panel-title">Content</div>
+                    <div class="field">
+                        <label>Type</label>
+                        <select id="content-type" onchange="handleTypeChange()">
+                            <option value="url">URL</option>
+                            <option value="text">Plain Text</option>
+                            <option value="email">Email</option>
+                            <option value="phone">Phone</option>
+                            <option value="wifi">Wi-Fi</option>
+                            <option value="vcard">vCard</option>
+                        </select>
+                    </div>
+                    <div id="field-url" class="field">
+                        <label>URL</label>
+                        <input type="text" id="input-url" placeholder="https://example.com" value="https://example.com">
+                    </div>
+                    <div id="field-text" class="field" style="display:none">
+                        <label>Text</label><textarea id="input-text" placeholder="Enter text…"></textarea>
+                    </div>
+                    <div id="field-email" style="display:none">
+                        <div class="field"><label>Email</label><input type="text" id="input-email"
+                                placeholder="hello@example.com"></div>
+                        <div class="field"><label>Subject</label><input type="text" id="input-email-sub"
+                                placeholder="Subject…"></div>
+                        <div class="field"><label>Body</label><textarea id="input-email-body"
+                                placeholder="Message…"></textarea></div>
+                    </div>
+                    <div id="field-phone" class="field" style="display:none">
+                        <label>Phone</label><input type="text" id="input-phone" placeholder="+1 555 000 0000">
+                    </div>
+                    <div id="field-wifi" style="display:none">
+                        <div class="field"><label>SSID</label><input type="text" id="wifi-ssid"
+                                placeholder="NetworkName"></div>
+                        <div class="row">
+                            <div class="field"><label>Password</label><input type="text" id="wifi-pass"
+                                    placeholder="Password"></div>
+                            <div class="field"><label>Security</label><select id="wifi-sec">
+                                    <option>WPA</option>
+                                    <option>WEP</option>
+                                    <option>nopass</option>
+                                </select></div>
+                        </div>
+                    </div>
+                    <div id="field-vcard" style="display:none">
+                        <div class="row">
+                            <div class="field"><label>First Name</label><input type="text" id="vc-first"
+                                    placeholder="John"></div>
+                            <div class="field"><label>Last Name</label><input type="text" id="vc-last"
+                                    placeholder="Doe"></div>
+                        </div>
+                        <div class="field"><label>Phone</label><input type="text" id="vc-phone"
+                                placeholder="+1 555 000"></div>
+                        <div class="field"><label>Email</label><input type="text" id="vc-email"
+                                placeholder="john@example.com"></div>
+                        <div class="field"><label>Organization</label><input type="text" id="vc-org"
+                                placeholder="Acme Inc."></div>
+                        <div class="field"><label>Website</label><input type="text" id="vc-url" placeholder="https://">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Style -->
+                <div class="panel">
+                    <div class="panel-title">Style</div>
+
+                    <div class="field">
+                        <label>Dot Pattern</label>
+                        <div class="style-grid">
+                            <label class="style-option">
+                                <input type="radio" name="dot-style" value="square" checked>
+                                <div class="style-card">
+                                    <svg class="style-icon" viewBox="0 0 44 44">
+                                        <rect x="3" y="3" width="10" height="10" fill="currentColor" />
+                                        <rect x="17" y="3" width="10" height="10" fill="currentColor" />
+                                        <rect x="31" y="3" width="10" height="10" fill="currentColor" />
+                                        <rect x="3" y="17" width="10" height="10" fill="currentColor" />
+                                        <rect x="17" y="17" width="10" height="10" fill="currentColor" />
+                                        <rect x="31" y="17" width="10" height="10" fill="currentColor" />
+                                        <rect x="3" y="31" width="10" height="10" fill="currentColor" />
+                                        <rect x="17" y="31" width="10" height="10" fill="currentColor" />
+                                        <rect x="31" y="31" width="10" height="10" fill="currentColor" />
+                                    </svg>
+                                    <div class="style-label">Square</div>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="radio" name="dot-style" value="round">
+                                <div class="style-card">
+                                    <svg class="style-icon" viewBox="0 0 44 44">
+                                        <circle cx="8" cy="8" r="5" fill="currentColor" />
+                                        <circle cx="22" cy="8" r="5" fill="currentColor" />
+                                        <circle cx="36" cy="8" r="5" fill="currentColor" />
+                                        <circle cx="8" cy="22" r="5" fill="currentColor" />
+                                        <circle cx="22" cy="22" r="5" fill="currentColor" />
+                                        <circle cx="36" cy="22" r="5" fill="currentColor" />
+                                        <circle cx="8" cy="36" r="5" fill="currentColor" />
+                                        <circle cx="22" cy="36" r="5" fill="currentColor" />
+                                        <circle cx="36" cy="36" r="5" fill="currentColor" />
+                                    </svg>
+                                    <div class="style-label">Round</div>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="radio" name="dot-style" value="diamond">
+                                <div class="style-card">
+                                    <svg class="style-icon" viewBox="0 0 44 44">
+                                        <polygon points="8,3 13,8 8,13 3,8" fill="currentColor" />
+                                        <polygon points="22,3 27,8 22,13 17,8" fill="currentColor" />
+                                        <polygon points="36,3 41,8 36,13 31,8" fill="currentColor" />
+                                        <polygon points="8,17 13,22 8,27 3,22" fill="currentColor" />
+                                        <polygon points="22,17 27,22 22,27 17,22" fill="currentColor" />
+                                        <polygon points="36,17 41,22 36,27 31,22" fill="currentColor" />
+                                        <polygon points="8,31 13,36 8,41 3,36" fill="currentColor" />
+                                        <polygon points="22,31 27,36 22,41 17,36" fill="currentColor" />
+                                        <polygon points="36,31 41,36 36,41 31,36" fill="currentColor" />
+                                    </svg>
+                                    <div class="style-label">Diamond</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Corner Frame</label>
+                        <div class="style-grid">
+                            <label class="style-option">
+                                <input type="radio" name="corner-style" value="square" checked>
+                                <div class="style-card">
+                                    <svg class="style-icon" viewBox="0 0 44 44">
+                                        <rect x="3" y="3" width="18" height="18" stroke="currentColor"
+                                            stroke-width="3.5" fill="none" />
+                                        <rect x="9" y="9" width="6" height="6" fill="currentColor" />
+                                    </svg>
+                                    <div class="style-label">Square</div>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="radio" name="corner-style" value="rounded">
+                                <div class="style-card">
+                                    <svg class="style-icon" viewBox="0 0 44 44">
+                                        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor"
+                                            stroke-width="3.5" fill="none" />
+                                        <rect x="9" y="9" width="6" height="6" rx="2" fill="currentColor" />
+                                    </svg>
+                                    <div class="style-label">Rounded</div>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="radio" name="corner-style" value="circle">
+                                <div class="style-card">
+                                    <svg class="style-icon" viewBox="0 0 44 44">
+                                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3.5"
+                                            fill="none" />
+                                        <circle cx="12" cy="12" r="3.5" fill="currentColor" />
+                                    </svg>
+                                    <div class="style-label">Circle</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="field">
+                            <label>QR Color</label>
+                            <div class="color-group">
+                                <div class="color-swatch">
+                                    <div class="color-preview" id="fg-preview" style="background:#000000"></div>
+                                    <input type="color" id="fg-color" value="#000000" oninput="syncColor('fg')">
+                                </div>
+                                <input type="text" class="color-hex" id="fg-hex" value="#000000" oninput="syncHex('fg')"
+                                    maxlength="7">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Background</label>
+                            <div class="color-group">
+                                <div class="color-swatch">
+                                    <div class="color-preview" id="bg-preview" style="background:#ffffff"></div>
+                                    <input type="color" id="bg-color" value="#ffffff" oninput="syncColor('bg')">
+                                </div>
+                                <input type="text" class="color-hex" id="bg-hex" value="#ffffff" oninput="syncHex('bg')"
+                                    maxlength="7">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Size (px)</label>
+                        <div class="slider-wrap">
+                            <input type="range" id="qr-size" min="128" max="512" step="8" value="300"
+                                oninput="document.getElementById('size-val').textContent=this.value">
+                            <span class="slider-val" id="size-val">300</span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Error Correction</label>
+                        <div class="toggle-group">
+                            <button class="toggle-btn" onclick="setEC('L',this)">L</button>
+                            <button class="toggle-btn" onclick="setEC('M',this)">M</button>
+                            <button class="toggle-btn active" onclick="setEC('Q',this)">Q</button>
+                            <button class="toggle-btn" onclick="setEC('H',this)">H</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo -->
+                <div class="panel">
+                    <div class="panel-title">Center Image / Logo</div>
+                    <div class="upload-zone" id="upload-zone">
+                        <input type="file" id="logo-file" accept="image/*" onchange="handleLogoUpload(event)">
+                        <div class="upload-icon">⬆</div>
+                        <div class="upload-text">Drop image here or click to upload<br>
+                            <span style="color:#3d3d55;margin-top:4px;display:block">PNG, SVG, JPG</span>
+                        </div>
+                    </div>
+                    <div class="upload-preview" id="upload-preview">
+                        <img id="upload-thumb" src="" alt="">
+                        <span class="upload-preview-name" id="upload-name"></span>
+                        <button class="remove-img" onclick="removeLogo()">✕</button>
+                    </div>
+                    <div class="field" style="margin-top:16px">
+                        <label>Logo Size</label>
+                        <div class="slider-wrap">
+                            <input type="range" id="logo-size" min="10" max="35" value="20"
+                                oninput="document.getElementById('logo-size-val').textContent=this.value+'%'">
+                            <span class="slider-val" id="logo-size-val">20%</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Logo Border Radius</label>
+                        <div class="slider-wrap">
+                            <input type="range" id="logo-radius" min="0" max="50" value="8"
+                                oninput="document.getElementById('logo-radius-val').textContent=this.value+'%'">
+                            <span class="slider-val" id="logo-radius-val">8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-generate" onclick="generateQR()">Generate QR Code</button>
+            </div>
+
+            <!-- Preview -->
+            <div class="qr-preview-panel">
+                <div class="panel">
+                    <div class="panel-title">Preview</div>
+                    <div class="qr-canvas-wrap">
+                        <div class="qr-placeholder" id="qr-placeholder">
+                            <div class="qr-placeholder-icon">▦</div>
+                            <div class="qr-placeholder-text">Your QR code<br>will appear here</div>
+                        </div>
+                        <div id="qr-container"></div>
+                    </div>
+                    <button class="btn-download" id="btn-download" onclick="downloadQR()">↓ Download PNG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
