@@ -92,7 +92,9 @@ function savePreset() {
         logoSize: document.getElementById('logo-size').value,
         logoRadius: document.getElementById('logo-radius').value,
         logoQuiet: document.getElementById('logo-quiet').value,
-        cta: document.getElementById('cta-text').value
+        cta: document.getElementById('cta-text').value,
+        ctaSize: document.getElementById('cta-size').value,
+        ctaFont: document.getElementById('cta-font').value
     };
     const blob = new Blob([JSON.stringify(preset, null, 2)], {type: 'application/json'});
     const a = document.createElement('a');
@@ -117,6 +119,8 @@ function loadPreset(e) {
         if (p.logoRadius) document.getElementById('logo-radius').value = p.logoRadius;
         if (p.logoQuiet) document.getElementById('logo-quiet').value = p.logoQuiet;
         if (p.cta !== undefined) document.getElementById('cta-text').value = p.cta;
+        if (p.ctaSize) document.getElementById('cta-size').value = p.ctaSize;
+        if (p.ctaFont) document.getElementById('cta-font').value = p.ctaFont;
         checkDPIWarning();
         updateContrast();
     };
@@ -128,7 +132,7 @@ function scheduleLivePreview() {
     if (debounceTimer) clearTimeout(debounceTimer);
     debounceTimer = setTimeout(generateQR, 300);
 }
-document.querySelectorAll('#content-type, #input-url, #input-text, #input-email, #input-email-sub, #input-email-body, #input-phone, #wifi-ssid, #wifi-pass, #vc-first, #vc-last, #vc-phone, #vc-email, #vc-org, #vc-url, #cta-text').forEach(el => {
+document.querySelectorAll('#content-type, #input-url, #input-text, #input-email, #input-email-sub, #input-email-body, #input-phone, #wifi-ssid, #wifi-pass, #vc-first, #vc-last, #vc-phone, #vc-email, #vc-org, #vc-url, #cta-text, #cta-size, #cta-font').forEach(el => {
     el.addEventListener('input', scheduleLivePreview);
 });
 
@@ -430,12 +434,16 @@ function generateQR() {
     canvas.cta = cta;
 
     if (cta) {
+        const ctaSize = parseInt(document.getElementById('cta-size').value);
+        const ctaFont = document.getElementById('cta-font').value;
         ctx.translate(-offset, -offset);
-        ctx.font = `bold ${Math.max(14, ms * 0.5)}px "DM Mono", monospace`;
+        ctx.font = `bold ${ctaSize}px ${ctaFont}`;
         ctx.fillStyle = fg;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         ctx.fillText(cta, fullHeight / 2, totalSize + ms * 0.3);
+        canvas.ctaSize = ctaSize;
+        canvas.ctaFont = ctaFont;
     }
 
     const show = () => {

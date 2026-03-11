@@ -280,6 +280,28 @@
                         <label>Call-to-Action Text</label>
                         <input type="text" id="cta-text" placeholder="Scan to visit...">
                     </div>
+                    <div class="row">
+                        <div class="field">
+                            <label>CTA Font Size</label>
+                            <div class="slider-wrap">
+                                <input type="range" id="cta-size" min="10" max="72" value="24"
+                                    oninput="document.getElementById('cta-size-val').textContent=this.value">
+                                <span class="slider-val" id="cta-size-val">24</span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>CTA Font</label>
+                            <select id="cta-font">
+                                <option value="DM Mono, monospace" selected>DM Mono</option>
+                                <option value="Syne, sans-serif">Syne</option>
+                                <option value="system-ui, sans-serif">System UI</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="Helvetica, sans-serif">Helvetica</option>
+                                <option value="Georgia, serif">Georgia</option>
+                                <option value="Courier New, monospace">Courier</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Logo -->
